@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">To do Daily</string>
+    <string name="description_splash">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris pellentesque erat in blandit luctus.</string>
+    <string name="get_started">Get Started</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
