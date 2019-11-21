@@ -29,14 +29,6 @@
                 app:layout_constraintVertical_bias="0.0">
 
                 <TextView
-                    android:id="@+id/tv_user_fullname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hello Brenda"
-                    android:textColor="#fff"
-                    android:textSize="20sp" />
-
-                <TextView
                     android:id="@+id/tv_noti_task"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -44,17 +36,6 @@
                     android:textColor="#fff"
                     android:textSize="10sp" />
             </LinearLayout>
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_weight="1"
-                android:src="@mipmap/ic_launcher"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
