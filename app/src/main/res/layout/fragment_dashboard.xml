@@ -1,16 +1,364 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/text_dashboard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp" />
-</LinearLayout>
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <androidx.constraintlayout.widget.ConstraintLayout
+               android:layout_width="match_parent"
+               android:layout_height="140dp"
+               android:background="@drawable/bg_toolbar">
+
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="80dp"
+                   android:layout_marginHorizontal="24dp"
+                   android:layout_marginStart="16dp"
+                   android:layout_marginTop="16dp"
+                   android:layout_marginEnd="16dp"
+                   android:layout_marginBottom="16dp"
+                   android:background="@drawable/bg_opacity_radius_white"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="parent">
+
+                   <LinearLayout
+                       android:layout_centerVertical="true"
+                       android:layout_alignParentLeft="true"
+                       android:layout_marginLeft="16dp"
+                       android:orientation="vertical"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content">
+                       <TextView
+                           android:textColor="#fff"
+                           android:textSize="18sp"
+                           android:textStyle="bold"
+                           android:text="Today Reminder"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+                       <TextView
+                           android:textColor="#fff"
+                           android:textSize="11sp"
+                           android:text="Meeting with client"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+                       <TextView
+                           android:textColor="#fff"
+                           android:textSize="11sp"
+                           android:text="11 : 00 pm"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"/>
+                   </LinearLayout>
+                   <ImageView
+                       android:layout_centerVertical="true"
+                       android:layout_marginRight="16dp"
+                       android:layout_alignParentRight="true"
+                       android:src="@drawable/bell_l"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"/>
+               </RelativeLayout>
+           </androidx.constraintlayout.widget.ConstraintLayout>
+           <GridLayout
+               android:layout_width="match_parent"
+               android:layout_height="550dp"
+               android:columnCount="2"
+               android:orientation="vertical"
+               android:rowCount="3">
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="50dp"
+                   android:layout_rowWeight="1"
+                   android:layout_columnWeight="1"
+                   android:layout_marginLeft="16dp"
+                   android:layout_marginTop="16dp"
+                   android:layout_marginRight="8dp"
+                   android:background="@drawable/bg_radius"
+                   android:elevation="3dp"
+                   android:gravity="center"
+                   android:orientation="vertical">
+
+                   <androidx.constraintlayout.widget.ConstraintLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content">
+
+                       <com.mikhaellopez.circleview.CircleView
+                           android:id="@+id/circleView1"
+                           android:layout_width="65dp"
+                           android:layout_height="65dp"
+                           app:cv_color="#7AFFEE9B"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+
+                       <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/personal"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="@+id/circleView1"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+                   </androidx.constraintlayout.widget.ConstraintLayout>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Personal"
+                       android:textColor="#686868"
+                       android:textSize="16sp"
+                       android:textStyle="bold" />
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="50dp"
+                   android:layout_rowWeight="1"
+                   android:layout_columnWeight="1"
+                   android:layout_marginLeft="16dp"
+                   android:layout_marginTop="16dp"
+                   android:layout_marginRight="8dp"
+                   android:background="@drawable/bg_radius"
+                   android:elevation="3dp"
+                   android:gravity="center"
+                   android:orientation="vertical">
+
+                   <androidx.constraintlayout.widget.ConstraintLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content">
+
+                       <com.mikhaellopez.circleview.CircleView
+                           android:id="@+id/circleView3"
+                           android:layout_width="65dp"
+                           android:layout_height="65dp"
+                           app:cv_color="#61FF9BCD"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+
+                       <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/meeting"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+                   </androidx.constraintlayout.widget.ConstraintLayout>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="8dp"
+                       android:text="Meeting"
+                       android:textColor="#686868"
+                       android:textSize="16sp"
+                       android:textStyle="bold" />
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_marginBottom="24dp"
+                   android:layout_width="0dp"
+                   android:layout_height="50dp"
+                   android:layout_rowWeight="1"
+                   android:layout_columnWeight="1"
+                   android:layout_marginLeft="16dp"
+                   android:layout_marginTop="16dp"
+                   android:layout_marginRight="8dp"
+                   android:background="@drawable/bg_radius"
+                   android:elevation="3dp"
+                   android:gravity="center"
+                   android:orientation="vertical">
+
+                   <androidx.constraintlayout.widget.ConstraintLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content">
+
+                       <com.mikhaellopez.circleview.CircleView
+                           android:id="@+id/circleView4"
+                           android:layout_width="65dp"
+                           android:layout_height="65dp"
+                           app:cv_color="#599BFFF8"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+
+                       <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/party"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+                   </androidx.constraintlayout.widget.ConstraintLayout>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="8dp"
+                       android:text="Party"
+                       android:textColor="#686868"
+                       android:textSize="16sp"
+                       android:textStyle="bold" />
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="50dp"
+                   android:layout_rowWeight="1"
+                   android:layout_columnWeight="1"
+                   android:layout_marginLeft="8dp"
+                   android:layout_marginTop="16dp"
+                   android:layout_marginRight="16dp"
+                   android:background="@drawable/bg_radius"
+                   android:elevation="3dp"
+                   android:gravity="center"
+                   android:orientation="vertical">
+
+                   <androidx.constraintlayout.widget.ConstraintLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content">
+
+                       <com.mikhaellopez.circleview.CircleView
+                           android:id="@+id/circleView5"
+                           android:layout_width="65dp"
+                           android:layout_height="65dp"
+                           app:cv_color="#5CB5FF9B"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+
+                       <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/work"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+                   </androidx.constraintlayout.widget.ConstraintLayout>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="8dp"
+                       android:text="Work"
+                       android:textColor="#686868"
+                       android:textSize="16sp"
+                       android:textStyle="bold" />
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="50dp"
+                   android:layout_rowWeight="1"
+                   android:layout_columnWeight="1"
+                   android:layout_marginLeft="8dp"
+                   android:layout_marginTop="16dp"
+                   android:layout_marginRight="16dp"
+                   android:background="@drawable/bg_radius"
+                   android:elevation="3dp"
+                   android:gravity="center"
+                   android:orientation="vertical">
+
+                   <androidx.constraintlayout.widget.ConstraintLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content">
+
+                       <com.mikhaellopez.circleview.CircleView
+                           android:id="@+id/circleView6"
+                           android:layout_width="65dp"
+                           android:layout_height="65dp"
+                           app:cv_color="#68FFD09B"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+
+                       <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/shopping"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+                   </androidx.constraintlayout.widget.ConstraintLayout>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="8dp"
+                       android:text="Shopping"
+                       android:textColor="#686868"
+                       android:textSize="16sp"
+                       android:textStyle="bold" />
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_marginBottom="24dp"
+                   android:layout_width="0dp"
+                   android:layout_height="50dp"
+                   android:layout_rowWeight="1"
+                   android:layout_columnWeight="1"
+                   android:layout_marginLeft="8dp"
+                   android:layout_marginTop="16dp"
+                   android:layout_marginRight="16dp"
+                   android:background="@drawable/bg_radius"
+                   android:elevation="3dp"
+                   android:gravity="center"
+                   android:orientation="vertical">
+
+                   <androidx.constraintlayout.widget.ConstraintLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content">
+
+                       <com.mikhaellopez.circleview.CircleView
+                           android:id="@+id/circleView2"
+                           android:layout_width="65dp"
+                           android:layout_height="65dp"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+
+                       <ImageView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/study"
+                           app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toTopOf="parent" />
+                   </androidx.constraintlayout.widget.ConstraintLayout>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="8dp"
+                       android:text="Study"
+                       android:textColor="#686868"
+                       android:textSize="16sp"
+                       android:textStyle="bold" />
+
+               </LinearLayout>
+           </GridLayout>
+
+       </LinearLayout>
+    </ScrollView>

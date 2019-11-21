@@ -36,21 +36,12 @@ import static android.opengl.ETC1.getWidth;
 public class HomeFragment extends Fragment {
     RecyclerView rvTask;
     View root;
-    FloatingActionButton fbAdd;
 
-    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-         root = inflater.inflate(R.layout.fragment_home, container, false);
-        homeViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-            }
-        });
-        init();
+                root = inflater.inflate(R.layout.fragment_home, container, false);
+              init();
         return root;
     }
     void init(){
@@ -66,7 +57,6 @@ public class HomeFragment extends Fragment {
         tasks.add(new Task("7 : 20 AM", "Send project file", "violet"));
         tasks.add(new Task("7 : 20 AM", "Send project file", "yellow"));
         rvTask = root.findViewById(R.id.rv_task);
-//        fbAdd = root.findViewById(R.id.fl_add);
         rvTask.setLayoutManager( new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         TaskAdapter taskAdapter = new TaskAdapter(tasks,getContext());
         rvTask.setAdapter(taskAdapter);
