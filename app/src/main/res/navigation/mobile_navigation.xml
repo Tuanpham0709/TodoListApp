@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.tododaily.ui.home.HomeFragment"
+        android:name="com.example.tododaily.view.home.HomeFragment"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.tododaily.ui.dashboard.DashboardFragment"
+        android:name="com.example.tododaily.view.dashboard.DashboardFragment"
         tools:layout="@layout/fragment_dashboard" />
 
 </navigation>

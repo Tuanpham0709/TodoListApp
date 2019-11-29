@@ -1,4 +1,4 @@
-package com.example.tododaily;
+package com.example.tododaily.view;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -6,10 +6,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.tododaily.R;
 import com.example.tododaily.adapter.CategoryAdapter;
 import com.example.tododaily.adapter.TaskAdapter;
+import com.example.tododaily.interfaces.Main;
 import com.example.tododaily.model.Category;
 import com.example.tododaily.model.DialogAddTask;
+import com.example.tododaily.presenter.MainPresenter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,9 +30,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Main, View.OnClickListener {
     FloatingActionButton fbAddTask;
-
+    MainPresenter mainPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,20 +49,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        eventClick();
     }
-    void init(){
-
+    void init() {
         fbAddTask = findViewById(R.id.fl_add);
-
-    }
-    void eventClick(){
-        fbAddTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-        showEditDialog();
-            }
-        });
+        fbAddTask.setOnClickListener(this);
+        mainPresenter = new MainPresenter(this);
     }
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
@@ -69,4 +63,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void showDialog() {
+        showEditDialog();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.fl_add:
+                mainPresenter.show();
+        }
+    }
 }

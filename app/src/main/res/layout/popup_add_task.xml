@@ -61,6 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_taskname" />
 
     <TextView
+        android:background="@drawable/btn_press"
         android:id="@+id/tv_choose_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,6 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
+        android:drawableRight="@drawable/ic_action_name"
         app:layout_constraintTop_toBottomOf="@+id/rv_cat" />
 
     <TextView
@@ -79,12 +81,15 @@
         android:layout_height="21dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="12dp"
+        android:background="@drawable/btn_press"
+        android:drawableRight="@drawable/ic_action_name"
         android:text="Choose time"
         app:layout_constraintBottom_toTopOf="@+id/btn_add_task"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toEndOf="@+id/tv_choose_date"
-        app:layout_constraintTop_toBottomOf="@+id/rv_cat" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_cat"
+        app:layout_constraintVertical_bias="0.347" />
 
     <Button
         android:id="@+id/btn_add_task"

@@ -13,7 +13,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tododaily.R;
+import com.example.tododaily.interfaces.TaskList;
 import com.example.tododaily.model.Task;
+import com.example.tododaily.presenter.MainPresenter;
+import com.example.tododaily.presenter.TaskListPresenter;
 
 import java.util.ArrayList;
 
@@ -43,7 +46,8 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
         return data.size();
     }
 
-    class TaskViewHolder extends RecyclerView.ViewHolder{
+    class TaskViewHolder extends RecyclerView.ViewHolder implements TaskList {
+        TaskListPresenter taskListPresenter;
         View vCat;
         TextView tvTime, tvTaskName;
         ImageView imgCheck;
@@ -54,12 +58,19 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
             init(itemView);
         }
         void init(View itemView){
+            taskListPresenter = new TaskListPresenter(this);
             vCat = itemView.findViewById(R.id.v_cat);
             tvTime = itemView.findViewById(R.id.tv_time);
             tvTaskName = itemView.findViewById(R.id.tv_task_name);
             imgCheck = itemView.findViewById(R.id.img_check_done);
             cardItem = itemView.findViewById(R.id.card_item);
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    taskListPresenter.toggleTask(!data.get(getAdapterPosition()).isChecked());
+                    notifyDataSetChanged();
+                }
+            });
         }
         void configView(int positon){
             switch (data.get(positon).getGroupColor()){
@@ -88,6 +99,26 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
             tvTime.setText(data.get(positon).getTime());
             cardItem.setMaxCardElevation(0);
             cardItem.setCardBackgroundColor(Color.parseColor("#E6E6E6"));
+            if(data.get(getAdapterPosition()).isChecked()){
+                imgCheck.setImageResource(R.drawable.ic_tick);
+                return;
+            }
+            imgCheck.setImageResource(R.drawable.bell_small);
+        }
+
+        @Override
+        public void checkTask(boolean checked) {
+            data.get(getAdapterPosition()).setChecked(checked);
+        }
+
+        @Override
+        public void editTask() {
+
+        }
+
+        @Override
+        public void removeTask() {
+
         }
     }
 }

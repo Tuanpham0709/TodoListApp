@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,7 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tododaily.R;
+import com.example.tododaily.interfaces.NewTask;
 import com.example.tododaily.model.Category;
+import com.example.tododaily.presenter.NewTaskPresenter;
 import com.mikhaellopez.circleview.CircleView;
 
 import java.util.ArrayList;
@@ -21,10 +24,11 @@ import java.util.ArrayList;
 public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>{
     Context context;
     ArrayList<Category> data;
-
-    public CategoryAdapter(Context context, ArrayList<Category> data) {
+    NewTask newTask;
+    public CategoryAdapter(Context context, ArrayList<Category> data, NewTask newTask) {
         this.context = context;
         this.data = data;
+        this.newTask = newTask;
     }
 
     @NonNull
@@ -48,27 +52,33 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.Categ
         CircleView circleView;
         TextView tvCat;
         LinearLayout lCat;
+        ImageView imgCheck;
+        NewTaskPresenter newTaskPresenter;
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             circleView = itemView.findViewById(R.id.circleView);
             tvCat = itemView.findViewById(R.id.tv_cat);
             lCat = itemView.findViewById(R.id.l_cat);
+            newTaskPresenter = new NewTaskPresenter(newTask);
             onPressItem(itemView);
         }
         void onPressItem(View itemView){
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     if (data.get(getAdapterPosition()).isSelected()){
                         data.get(getAdapterPosition()).setSelected(false);
-                        notifyDataSetChanged();
-                     return;
+                    }else
+                    {
+                        for (Category cat : data){
+                            cat.setSelected(false);
+                        }
+                        data.get(getAdapterPosition()).setSelected(true);
                     }
-                    for (Category cat : data){
-                        cat.setSelected(false);
-                    }
-                    data.get(getAdapterPosition()).setSelected(true);
+
                     notifyDataSetChanged();
+                    newTaskPresenter.toggleTask(data);
                 }
             });
         }
