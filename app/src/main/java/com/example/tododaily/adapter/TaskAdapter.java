@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -45,8 +46,13 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
     public int getItemCount() {
         return data.size();
     }
-
-    class TaskViewHolder extends RecyclerView.ViewHolder implements TaskList {
+   public void deletedItem(boolean isRemoved, int position){
+        if(isRemoved){
+            data.remove(position);
+            notifyDataSetChanged();
+        }
+    }
+    public class TaskViewHolder extends RecyclerView.ViewHolder implements TaskList {
         TaskListPresenter taskListPresenter;
         View vCat;
         TextView tvTime, tvTaskName;
@@ -58,7 +64,7 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
             init(itemView);
         }
         void init(View itemView){
-            taskListPresenter = new TaskListPresenter(this);
+            taskListPresenter = new TaskListPresenter(this, context);
             vCat = itemView.findViewById(R.id.v_cat);
             tvTime = itemView.findViewById(R.id.tv_time);
             tvTaskName = itemView.findViewById(R.id.tv_task_name);
@@ -73,23 +79,23 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
             });
         }
         void configView(int positon){
-            switch (data.get(positon).getGroupColor()){
-                case "yellow":
+            switch (data.get(positon).getCateName()){
+                case "Personal":
                     vCat.setBackgroundColor(context.getResources().getColor(R.color.yellow));
                     break;
-                case "green":
+                case "Work":
                     vCat.setBackgroundColor(context.getResources().getColor(R.color.green));
                     break;
-                case "pink":
+                case "Meeting":
                     vCat.setBackgroundColor(context.getResources().getColor(R.color.pink));
                     break;
-                case "orange":
+                case "Shopping":
                     vCat.setBackgroundColor(context.getResources().getColor(R.color.orange));
                     break;
-                case "blue":
+                case "Party":
                     vCat.setBackgroundColor(context.getResources().getColor(R.color.blue));
                     break;
-                case "violet":
+                case "Study":
                     vCat.setBackgroundColor(context.getResources().getColor(R.color.violet));
                     break;
                     default:vCat.setBackgroundColor(Color.BLACK);
@@ -106,6 +112,7 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
             imgCheck.setImageResource(R.drawable.bell_small);
         }
 
+
         @Override
         public void checkTask(boolean checked) {
             data.get(getAdapterPosition()).setChecked(checked);
@@ -117,7 +124,13 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
         }
 
         @Override
-        public void removeTask() {
+        public void removeTask(int position,boolean isRemoved, String message ) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void getAllTask(ArrayList<Task> tasks) {
 
         }
     }

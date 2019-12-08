@@ -59,7 +59,8 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.Categ
             circleView = itemView.findViewById(R.id.circleView);
             tvCat = itemView.findViewById(R.id.tv_cat);
             lCat = itemView.findViewById(R.id.l_cat);
-            newTaskPresenter = new NewTaskPresenter(newTask);
+            newTaskPresenter = new NewTaskPresenter(newTask, context);
+            newTaskPresenter.toggleTask(data);
             onPressItem(itemView);
         }
         void onPressItem(View itemView){
@@ -67,19 +68,15 @@ public class CategoryAdapter  extends RecyclerView.Adapter<CategoryAdapter.Categ
                 @Override
                 public void onClick(View view) {
 
-                    if (data.get(getAdapterPosition()).isSelected()){
-                        data.get(getAdapterPosition()).setSelected(false);
-                    }else
-                    {
                         for (Category cat : data){
                             cat.setSelected(false);
                         }
                         data.get(getAdapterPosition()).setSelected(true);
-                    }
-
                     notifyDataSetChanged();
                     newTaskPresenter.toggleTask(data);
-                }
+                    }
+
+
             });
         }
         void configView(int position){

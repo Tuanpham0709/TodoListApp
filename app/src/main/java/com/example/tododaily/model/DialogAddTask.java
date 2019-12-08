@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -35,6 +36,9 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
     Button btnAddTask;
     ImageView imgDismiss;
     TextView tvDatePicker, tvTimePicker;
+    EditText edtTaskName ;
+    Category category;
+    String catName;
     public static DialogAddTask newInstance(String title) {
         DialogAddTask frag = new DialogAddTask();
         Bundle args = new Bundle();
@@ -50,13 +54,14 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
     }
     void init(){
         catList = new ArrayList<>();
-        catList.add(new Category("#F9C229", "Personal", false));
+        catList.add(new Category("#F9C229", "Personal", true));
         catList.add(new Category("#1ED102", "Work", false));
         catList.add(new Category("#D10263", "Meeting", false));
         catList.add(new Category("#EC6C0B", "Shopping", false));
         catList.add(new Category("#09ACCE", "Party", false));
         catList.add(new Category("#BF0080", "Study", false));
-        newTaskPresenter = new NewTaskPresenter(this);
+        category = new Category();
+        newTaskPresenter = new NewTaskPresenter(this, getContext());
     }
     public void onStart() {
         super.onStart();
@@ -82,6 +87,7 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
         tvDatePicker = view.findViewById(R.id.tv_choose_date);
         tvTimePicker = view.findViewById(R.id.tv_choose_time);
         tvTimePicker.setText(getCurrentTime());
+        edtTaskName = view.findViewById(R.id.edt_taskname);
         tvDatePicker.setText(getCurrentDate());
         tvTimePicker.setOnClickListener(this);
         tvDatePicker.setOnClickListener(this);
@@ -90,6 +96,12 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
     }
     String getCurrentDate(){
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        return  formatter.format(date);
+    }
+    String getCurrentDateTime(){
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+
         Date date = new Date();
         return  formatter.format(date);
     }
@@ -104,8 +116,8 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
     }
 
     @Override
-    public void toggleCategory(ArrayList<Category> cats) {
-
+    public void toggleCategory(String catName) {
+       this.catName= catName;
     }
     @Override
     public void chooseDate() {
@@ -115,20 +127,28 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
     public void checkForm() {
 
     }
+
+    @Override
+    public void checkValid(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void addTask(Task task) {
 
     }
     @Override
     public void navigate() {
-        startActivity(new Intent(getActivity(), TaskListActivity.class));
+        Intent intent = new Intent(getActivity(), TaskListActivity.class);
+        intent.putExtra("cat", this.catName);
+        startActivity(intent);
     }
 
     @Override
     public void showDatePicker() {
         final Calendar c = Calendar.getInstance();
-        int mYear = c.get(Calendar.YEAR);
-        int mMonth = c.get(Calendar.MONTH);
+        final int mYear = c.get(Calendar.YEAR);
+        final int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
@@ -137,8 +157,7 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-
-                        tvDatePicker.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        tvDatePicker.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
                     }
                 }, mYear, mMonth, mDay);
@@ -149,14 +168,13 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
     public void showTimePicker() {
         final Calendar c = Calendar.getInstance();
         int mHour = c.get(Calendar.HOUR_OF_DAY);
-        int mMinute = c.get(Calendar.MINUTE);
+        final int mMinute = c.get(Calendar.MINUTE);
         TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                 new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-
                         tvTimePicker.setText(hourOfDay + ":" + minute);
                     }
                 }, mHour, mMinute, false);
@@ -170,7 +188,14 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
                 dismiss();
                 break;
             case R.id.btn_add_task:
-                newTaskPresenter.navigate();
+                String date = tvTimePicker.getText().toString() + " " +  tvDatePicker.getText().toString();
+                String taskName = edtTaskName.getText().toString();
+                Task task = new Task();
+                task.setNameTask(taskName);
+                task.setTime(date);
+                task.setCateName(this.catName);
+                newTaskPresenter.addTask(task);
+                dismiss();
                 break;
             case R.id.tv_choose_date:
                 newTaskPresenter.showDatePicker();

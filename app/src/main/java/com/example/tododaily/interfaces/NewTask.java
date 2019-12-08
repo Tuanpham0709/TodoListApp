@@ -7,9 +7,10 @@ import java.util.ArrayList;
 
 public interface NewTask {
     void showPopup();
-    void toggleCategory(ArrayList<Category> cats);
+    void toggleCategory(String taskName);
     void chooseDate();
     void checkForm();
+    void checkValid(String message);
     void addTask(Task task);
     void navigate();
     void showDatePicker();

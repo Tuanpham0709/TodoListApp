@@ -1,19 +1,19 @@
 package com.example.tododaily.model;
 
 public class Task {
-    String time, nameTask, groupColor;
+    String id;
+    String time, nameTask, cateName;
     boolean checked;
-    public Task(String time, String nameTask, String groupColor) {
-        this.time = time;
-        this.nameTask = nameTask;
-        this.groupColor = groupColor;
-    }
+
 
     public Task(String time, String nameTask, String groupColor, boolean checked) {
         this.time = time;
         this.nameTask = nameTask;
-        this.groupColor = groupColor;
+        this.cateName = groupColor;
         this.checked = checked;
+    }
+    public Task(){
+
     }
 
     public boolean isChecked() {
@@ -41,11 +41,19 @@ public class Task {
         this.nameTask = nameTask;
     }
 
-    public String getGroupColor() {
-        return groupColor;
+    public String getId() {
+        return id;
     }
 
-    public void setGroupColor(String groupColor) {
-        this.groupColor = groupColor;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCateName() {
+        return cateName;
+    }
+
+    public void setCateName(String cateName) {
+        this.cateName = cateName;
     }
 }

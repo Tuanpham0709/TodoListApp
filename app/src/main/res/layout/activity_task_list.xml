@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".view.dashboard.TaskListActivity">
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_tasks_of_cat"
         android:background="@drawable/bg_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -15,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tv_title_tb"
                 android:layout_margin="16dp"
                 android:drawablePadding="10dp"
                 android:gravity="center"

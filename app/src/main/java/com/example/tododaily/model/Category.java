@@ -3,11 +3,23 @@ package com.example.tododaily.model;
 public class Category {
     private String color;
     private  String category;
+    private  String id;
     private boolean selected;
     public Category(String color, String category, boolean selected) {
         this.color = color;
         this.category = category;
         this.selected = selected;
+    }
+    public Category(){
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public boolean isSelected() {
