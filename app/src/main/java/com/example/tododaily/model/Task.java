@@ -1,5 +1,6 @@
 package com.example.tododaily.model;
 
+
 public class Task {
     String id;
     String time, nameTask, cateName;
@@ -48,7 +49,6 @@ public class Task {
     public void setId(String id) {
         this.id = id;
     }
-
     public String getCateName() {
         return cateName;
     }

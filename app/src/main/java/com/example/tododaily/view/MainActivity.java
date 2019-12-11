@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements Main, View.OnClic
         FragmentManager fm = getSupportFragmentManager();
         DialogAddTask editNameDialogFragment = DialogAddTask.newInstance("Some Title");
         editNameDialogFragment.show(fm, "fragment_edit_name");
-
-
     }
 
     @Override

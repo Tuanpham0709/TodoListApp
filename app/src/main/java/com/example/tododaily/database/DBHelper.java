@@ -86,9 +86,28 @@ public class DBHelper  extends SQLiteOpenHelper {
         values.put(CAT_NAME, task.getCateName());
         values.put(DUE_DATE, task.getTime());
         int isChecked = task.isChecked() ? 1: 0;
-        values.put(DUE_DATE, isChecked);
+        values.put(IS_CHECKED, isChecked);
         int result  = sqLiteDatabase.update(TASKS, values, ID + "=?", new String[]{String.valueOf(task.getId())});
         return result;
+    }
+    public ArrayList<Task> getTasksOfCat(String catName){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String selectQuery = " select * from " + TASKS  + " where " + CAT_NAME + "=?";
+        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, new String[]{catName});
+        ArrayList<Task> taskList = new ArrayList<>();
+        if(cursor.moveToFirst()){
+            do {
+                Task task  =  new Task();
+                task.setId(String.valueOf(cursor.getInt(0)));
+                task.setNameTask(cursor.getString(1));
+                task.setCateName(cursor.getString(2));
+                task.setTime(cursor.getString(3));
+                boolean isChecked = cursor.getInt(4) == 1 ? true : false;
+                task.setChecked(isChecked);
+                taskList.add(task);
+            }while (cursor.moveToNext());
+        }
+        return taskList;
     }
     public ArrayList<Task> getAllTask(){
         ArrayList<Task> tasks = new ArrayList<>();

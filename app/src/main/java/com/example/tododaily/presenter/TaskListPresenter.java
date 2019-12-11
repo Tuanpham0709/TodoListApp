@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.example.tododaily.database.DBHelper;
 import com.example.tododaily.interfaces.NewTask;
 import com.example.tododaily.interfaces.TaskList;
+import com.example.tododaily.model.DialogAddTask;
 import com.example.tododaily.model.Task;
 
 import java.util.ArrayList;
@@ -25,11 +26,17 @@ public class TaskListPresenter {
         tasks = dbHelper.getAllTask();
         taskList.getAllTask(tasks);
     }
-    public void toggleTask(boolean checked){
-        taskList.checkTask(checked);
+    public void toggleTask(boolean checked, Task task){
+        task.setChecked(checked);
+        int result = dbHelper.update(task);
+        if(result > 0){
+            taskList.checkTask(checked);
+        }
+
     }
     public void deleteItem(int position,int id){
         int result = dbHelper.delete(id);
+
         if(result > 0) {
             taskList.removeTask(position, true, "Deleted item");
             return;

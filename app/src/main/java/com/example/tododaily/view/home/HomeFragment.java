@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ public class HomeFragment extends Fragment implements TaskList {
     DBHelper dbHelper;
     TaskAdapter taskAdapter;
     ArrayList<Task> tasks;
+    LinearLayout emtyTask ;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
                 root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -35,16 +37,24 @@ public class HomeFragment extends Fragment implements TaskList {
     }
     void init(){
         dbHelper = new DBHelper(getActivity());
+        emtyTask = root.findViewById(R.id.empty_task);
+        rvTask = root.findViewById(R.id.rv_task);
        configView();
     }
     void configView(){
         tasks = dbHelper.getAllTask();
-        rvTask = root.findViewById(R.id.rv_task);
-        rvTask.setLayoutManager( new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        taskAdapter = new TaskAdapter(tasks,getContext());
-        rvTask.setAdapter(taskAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(taskAdapter, getContext(), this));
-        itemTouchHelper.attachToRecyclerView(rvTask);
+        if(tasks.size() > 0){
+            emtyTask.setVisibility(View.GONE);
+            rvTask.setLayoutManager( new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+            taskAdapter = new TaskAdapter(tasks,getContext(), root, "fragment");
+            rvTask.setAdapter(taskAdapter);
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(taskAdapter, getContext(), this));
+            itemTouchHelper.attachToRecyclerView(rvTask);
+            return;
+        }
+        rvTask.setVisibility(View.GONE);
+        emtyTask.setVisibility(View.VISIBLE);
+
     }
 
     @Override

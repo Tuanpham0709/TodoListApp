@@ -10,7 +10,7 @@ public interface NewTask {
     void toggleCategory(String taskName);
     void chooseDate();
     void checkForm();
-    void checkValid(String message);
+    void checkValid(String message, boolean isValid);
     void addTask(Task task);
     void navigate();
     void showDatePicker();

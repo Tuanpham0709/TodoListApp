@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +25,19 @@ import java.util.ArrayList;
 public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder>{
     ArrayList<Task> data;
     Context context;
-
-    public TaskAdapter(ArrayList<Task> data, Context context) {
+    RecyclerView recyclerView;
+    LinearLayout emptyTask;
+    public TaskAdapter(ArrayList<Task> data, Context context, View view,String type) {
         this.data = data;
         this.context = context;
+        if(type.equals("activity")){
+            recyclerView= view.findViewById(R.id.rv_task_of_cat);
+            emptyTask= view.findViewById(R.id.empty_task);
+        }else{
+            recyclerView = view.findViewById(R.id.rv_task);
+            emptyTask= view.findViewById(R.id.empty_task);
+        }
+
     }
 
     @NonNull
@@ -50,6 +60,10 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
         if(isRemoved){
             data.remove(position);
             notifyDataSetChanged();
+            if (data.size() <1){
+                recyclerView.setVisibility(View.GONE);
+                emptyTask.setVisibility(View.VISIBLE);
+            }
         }
     }
     public class TaskViewHolder extends RecyclerView.ViewHolder implements TaskList {
@@ -63,6 +77,8 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
             super(itemView);
             init(itemView);
         }
+
+
         void init(View itemView){
             taskListPresenter = new TaskListPresenter(this, context);
             vCat = itemView.findViewById(R.id.v_cat);
@@ -73,8 +89,8 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    taskListPresenter.toggleTask(!data.get(getAdapterPosition()).isChecked());
-                    notifyDataSetChanged();
+                    taskListPresenter.toggleTask(!data.get(getAdapterPosition()).isChecked(),data.get(getAdapterPosition()));
+
                 }
             });
         }
@@ -101,6 +117,7 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
                     default:vCat.setBackgroundColor(Color.BLACK);
 
             }
+
             tvTaskName.setText(data.get(positon).getNameTask());
             tvTime.setText(data.get(positon).getTime());
             cardItem.setMaxCardElevation(0);
@@ -116,6 +133,7 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
         @Override
         public void checkTask(boolean checked) {
             data.get(getAdapterPosition()).setChecked(checked);
+            notifyDataSetChanged();
         }
 
         @Override

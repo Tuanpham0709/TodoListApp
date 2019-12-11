@@ -129,7 +129,10 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
     }
 
     @Override
-    public void checkValid(String message) {
+    public void checkValid(String message, boolean isValid) {
+        if(isValid){
+            dismiss();
+        }
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -195,7 +198,6 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
                 task.setTime(date);
                 task.setCateName(this.catName);
                 newTaskPresenter.addTask(task);
-                dismiss();
                 break;
             case R.id.tv_choose_date:
                 newTaskPresenter.showDatePicker();
