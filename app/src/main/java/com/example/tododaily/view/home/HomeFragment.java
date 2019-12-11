@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,7 +48,7 @@ public class HomeFragment extends Fragment implements TaskList {
         if(tasks.size() > 0){
             emtyTask.setVisibility(View.GONE);
             rvTask.setLayoutManager( new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-            taskAdapter = new TaskAdapter(tasks,getContext(), root, "fragment");
+            taskAdapter = new TaskAdapter(tasks,getContext(), root, "fragment", getFragmentManager());
             rvTask.setAdapter(taskAdapter);
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(taskAdapter, getContext(), this));
             itemTouchHelper.attachToRecyclerView(rvTask);
@@ -55,6 +57,12 @@ public class HomeFragment extends Fragment implements TaskList {
         rvTask.setVisibility(View.GONE);
         emtyTask.setVisibility(View.VISIBLE);
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Toast.makeText(getActivity(), "adsasdadadsa", Toast.LENGTH_SHORT).show();
     }
 
     @Override

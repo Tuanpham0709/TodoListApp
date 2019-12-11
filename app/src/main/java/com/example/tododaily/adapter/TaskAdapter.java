@@ -12,10 +12,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tododaily.R;
 import com.example.tododaily.interfaces.TaskList;
+import com.example.tododaily.model.DialogAddTask;
 import com.example.tododaily.model.Task;
 import com.example.tododaily.presenter.MainPresenter;
 import com.example.tododaily.presenter.TaskListPresenter;
@@ -27,9 +29,11 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
     Context context;
     RecyclerView recyclerView;
     LinearLayout emptyTask;
-    public TaskAdapter(ArrayList<Task> data, Context context, View view,String type) {
+    FragmentManager fragmentManager;
+    public TaskAdapter(ArrayList<Task> data, Context context, View view,String type, FragmentManager fragmentManager) {
         this.data = data;
         this.context = context;
+        this.fragmentManager = fragmentManager;
         if(type.equals("activity")){
             recyclerView= view.findViewById(R.id.rv_task_of_cat);
             emptyTask= view.findViewById(R.id.empty_task);
@@ -91,6 +95,14 @@ public class TaskAdapter  extends RecyclerView.Adapter<TaskAdapter.TaskViewHolde
                 public void onClick(View view) {
                     taskListPresenter.toggleTask(!data.get(getAdapterPosition()).isChecked(),data.get(getAdapterPosition()));
 
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    DialogAddTask editNameDialogFragment = DialogAddTask.editInstance("Edit task", "Edit task", data.get(getAdapterPosition()));
+                    editNameDialogFragment.show(fragmentManager, "fragment_edit_name");
+                    return true;
                 }
             });
         }

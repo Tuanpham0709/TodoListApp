@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.tododaily.R;
 import com.example.tododaily.adapter.CategoryAdapter;
 import com.example.tododaily.adapter.TaskAdapter;
+import com.example.tododaily.database.DBHelper;
 import com.example.tododaily.interfaces.Main;
 import com.example.tododaily.model.Category;
 import com.example.tododaily.model.DialogAddTask;
+import com.example.tododaily.model.Task;
 import com.example.tododaily.presenter.MainPresenter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,11 +31,15 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements Main, View.OnClickListener {
     FloatingActionButton fbAddTask;
+    DBHelper dbHelper;
     MainPresenter mainPresenter;
+    TextView tvTb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,19 +58,40 @@ public class MainActivity extends AppCompatActivity implements Main, View.OnClic
         NavigationUI.setupWithNavController(navView, navController);
     }
     void init() {
+        dbHelper = new DBHelper(this);
+        ArrayList<Task> taskList = dbHelper.getAllTask();
+        int size  = taskList.size();
+        tvTb = findViewById(R.id.tv_noti_task);
+        tvTb.setText("Today you have " + size + " tasks");
         fbAddTask = findViewById(R.id.fl_add);
         fbAddTask.setOnClickListener(this);
         mainPresenter = new MainPresenter(this);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dbHelper = new DBHelper(this);
+        ArrayList<Task> taskList = dbHelper.getAllTask();
+        int size  = taskList.size();
+        tvTb = findViewById(R.id.tv_noti_task);
+        tvTb.setText("Today you have " + size + " tasks");
+    }
+
     private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        DialogAddTask editNameDialogFragment = DialogAddTask.newInstance("Some Title");
+        DialogAddTask editNameDialogFragment = DialogAddTask.newInstance("Add new task", "Add Task", "new_task");
         editNameDialogFragment.show(fm, "fragment_edit_name");
     }
 
     @Override
     public void showDialog() {
         showEditDialog();
+    }
+
+    @Override
+    public void getTaskCount(int count) {
+
     }
 
     @Override

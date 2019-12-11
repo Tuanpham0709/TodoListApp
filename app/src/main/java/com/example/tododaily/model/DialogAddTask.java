@@ -21,7 +21,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.tododaily.R;
 import com.example.tododaily.adapter.CategoryAdapter;
+import com.example.tododaily.interfaces.Main;
 import com.example.tododaily.interfaces.NewTask;
+import com.example.tododaily.presenter.MainPresenter;
 import com.example.tododaily.presenter.NewTaskPresenter;
 import com.example.tododaily.view.dashboard.TaskListActivity;
 
@@ -35,12 +37,32 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
     NewTaskPresenter newTaskPresenter;
     Button btnAddTask;
     ImageView imgDismiss;
-    TextView tvDatePicker, tvTimePicker;
+    TextView tvDatePicker, tvTimePicker, tvTitle, tvTitleBtn;
     EditText edtTaskName ;
     Category category;
     String catName;
-    public static DialogAddTask newInstance(String title) {
-        DialogAddTask frag = new DialogAddTask();
+    MainPresenter mainPresenter;
+    Main mMain;
+    String title, titleBtn;
+    String type;
+    public DialogAddTask (String title, String titleBtn, String type){
+        this.title = title;
+        this.titleBtn = titleBtn;
+        this.type = type;
+    }
+    public static DialogAddTask newInstance(String title, String titleBtn, String type) {
+        DialogAddTask frag = new DialogAddTask(title, titleBtn, type);
+        Bundle args = new Bundle();
+        args.putString("title", title);
+        frag.setArguments(args);
+        return frag;
+    }
+    Task task;
+    public DialogAddTask(String title, String titleBtn, Task task){
+        this.task = task;
+    }
+    public static DialogAddTask editInstance(String title, String titleBtn, Task task){
+        DialogAddTask frag = new DialogAddTask(title, titleBtn, task);
         Bundle args = new Bundle();
         args.putString("title", title);
         frag.setArguments(args);
@@ -49,7 +71,7 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       init();
+        init();
         return inflater.inflate(R.layout.popup_add_task, container);
     }
     void init(){
@@ -61,6 +83,7 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
         catList.add(new Category("#09ACCE", "Party", false));
         catList.add(new Category("#BF0080", "Study", false));
         category = new Category();
+        mainPresenter = new MainPresenter(mMain);
         newTaskPresenter = new NewTaskPresenter(this, getContext());
     }
     public void onStart() {
@@ -80,8 +103,17 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
         rvCat.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         rvCat.setAdapter(categoryAdapter);
         initViewCreated(view);
+        if(type == "new_task"){
+            tvTitle.setText("Add new task");
+            btnAddTask.setText("Add task");
+            return;
+        }
+        tvTitle.setText("Edit task");
+        btnAddTask.setText("Edit task");
+
     }
     void initViewCreated(View view){
+        tvTitle = view.findViewById(R.id.title_dialog);
         btnAddTask = view.findViewById(R.id.btn_add_task);;
         imgDismiss = view.findViewById(R.id.img_dismiss_popup);
         tvDatePicker = view.findViewById(R.id.tv_choose_date);
@@ -140,6 +172,12 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
     public void addTask(Task task) {
 
     }
+
+    @Override
+    public void editTask(Task task) {
+
+    }
+
     @Override
     public void navigate() {
         Intent intent = new Intent(getActivity(), TaskListActivity.class);
@@ -193,11 +231,19 @@ public class DialogAddTask extends DialogFragment implements NewTask,View.OnClic
             case R.id.btn_add_task:
                 String date = tvTimePicker.getText().toString() + " " +  tvDatePicker.getText().toString();
                 String taskName = edtTaskName.getText().toString();
-                Task task = new Task();
-                task.setNameTask(taskName);
-                task.setTime(date);
-                task.setCateName(this.catName);
-                newTaskPresenter.addTask(task);
+
+                if(type == "new_task"){
+                    Task newTask = new Task();
+                    newTask.setNameTask(taskName);
+                    newTask.setTime(date);
+                    newTask.setCateName(this.catName);
+                    newTaskPresenter.addTask(newTask);
+                    return;
+                }
+                this.task.setNameTask(taskName);
+                this.task.setTime(date);
+                this.task.setCateName(this.catName);
+                newTaskPresenter.editTask(this.task);
                 break;
             case R.id.tv_choose_date:
                 newTaskPresenter.showDatePicker();

@@ -12,6 +12,7 @@ public interface NewTask {
     void checkForm();
     void checkValid(String message, boolean isValid);
     void addTask(Task task);
+    void editTask(Task task);
     void navigate();
     void showDatePicker();
     void showTimePicker();

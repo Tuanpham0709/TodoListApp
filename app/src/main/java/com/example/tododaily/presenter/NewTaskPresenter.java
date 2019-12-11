@@ -24,21 +24,35 @@ public class NewTaskPresenter {
     public void navigate(){
         newTask.navigate();
     }
-    public boolean checkValid(Task task){
+    public boolean checkValid(Task task, String type){
         if(task.getNameTask().length() ==0 ){
+
             newTask.checkValid("Enter your task",false);
             return false;
         }
-        newTask.checkValid("Add task success", true);
+
         return true;
     }
    public void addTask(Task task){
-        if (checkValid(task)){
+        if (checkValid(task, "new_task")){
             dbHelper.addTask(task);
             newTask.addTask(task);
+            newTask.checkValid("Add task success", true);
             navigate();
         }
 
+    }
+    public void editTask(Task task){
+        if(checkValid(task, "edit_task")){
+            int result = dbHelper.update(task);
+            if(result > 0){
+                newTask.editTask(task);
+                newTask.checkValid("Edit task success", true);
+                return;
+            }
+            newTask.checkValid("An error occurred", true);
+
+        }
     }
     public  void toggleTask(ArrayList<Category> cats){
         for (Category category : cats){

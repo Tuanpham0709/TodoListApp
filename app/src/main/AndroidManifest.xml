@@ -13,6 +13,12 @@
         <activity
             android:name=".view.MainActivity"
             android:label="@string/title_activity_main" />
+
+        <receiver android:name=".Broadcast">
+            <intent-filter>
+                <action android:name="test.Broadcast"/>
+            </intent-filter>
+        </receiver>
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

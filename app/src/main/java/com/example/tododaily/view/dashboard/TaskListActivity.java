@@ -93,7 +93,7 @@ public class TaskListActivity extends AppCompatActivity implements TaskList {
         tasksOfCat = dbHelper.getTasksOfCat(cat);
         if(tasksOfCat.size() >0){
             emtyTask.setVisibility(View.GONE);
-             taskAdapter = new TaskAdapter(tasksOfCat,this,viewGroup,"activity");
+             taskAdapter = new TaskAdapter(tasksOfCat,this,viewGroup,"activity", getSupportFragmentManager());
             rvCatTask.setAdapter(taskAdapter);
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeToDeleteCallback(taskAdapter, this, this));
             itemTouchHelper.attachToRecyclerView(rvCatTask);
